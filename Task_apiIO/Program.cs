@@ -4,7 +4,7 @@ namespace Task_apiIO
 {
     public class World_list_of_uni
     {
-        public string link;
+        public string link= "http://universities.hipolabs.com/search?country=";
         
     }
 
@@ -39,26 +39,26 @@ namespace Task_apiIO
     {
         private static void Main(string[] args)
         {
-            World_list_of_uni WList_1 = new World_list_of_uni();
-            WList_1.link = "http://universities.hipolabs.com/search?country=";
-
             Countries USA = new Countries();
-
             USA.Country_name = "United+States";
-            
-            Console.Write("Please enter country name: USA");
+            Countries TR = new Countries();
+            TR.Country_name = "Turkey";
+
+            Console.Write("Please enter country name: ");
             string s = Console.ReadLine();
 
             switch (s)
             {
                 case "usa": 
                     USA.GetList();
-                    Console.WriteLine();
+                    Console.WriteLine(USA.Response);
+                    //var response = .Response;
                     break;
-                case "": 
-                    Console.WriteLine();
+                case "Turkey": 
+                    TR.GetList();
+                    Console.WriteLine(TR.Response);
                     break;
-                case "1":
+                case "":
                     Console.WriteLine();
                     break;
                     default: 
