@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Net;
 
-
-
 namespace Task_apiIO
 {   //Родительский класс(ограничевается раздачей общей кастомной ссылки)
     public class World_list_of_uni
