@@ -1,11 +1,13 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json.Linq;
+using System.Net;
+
+
 
 namespace Task_apiIO
 {
     public class World_list_of_uni
     {
         public string link= "http://universities.hipolabs.com/search?country=";
-        
     }
 
     public class Countries: World_list_of_uni
@@ -16,11 +18,11 @@ namespace Task_apiIO
         {
             link = link + Country_name;
         }
-        public string Response { get; set; }
+        protected string Response { get; set; }
 
-        HttpWebRequest request;
-        public void GetList()
-        {
+        protected void GetJson()
+        {   
+            HttpWebRequest request;
             Create_link();
             request = (HttpWebRequest)WebRequest.Create(link);
             try
@@ -31,9 +33,30 @@ namespace Task_apiIO
             }
             catch (Exception) { }
         }
+        public string short_list { get; set; }
+        public void short_list_of_universities()
+        {
+            GetJson();
+            var json = JArray.Parse(Response);
+            string str2 = string.Empty;
+            for (int i =0; i < json.Count; i++)
+            { 
+                char[] a = { '\n' };
+                string str = Convert.ToString(json[i]);
+                string[] Str = str.Split(a, StringSplitOptions.RemoveEmptyEntries);
 
+                for (int j=0; j<Str.Length; j++)
+                {
+                    if (Str[j].Contains("  \"name\": "))
+                    {
+                        char[] b = { '"' };
+                        string[] Str1 = Str[j].Split(b, StringSplitOptions.RemoveEmptyEntries);
+                        short_list = short_list + Convert.ToString(Str1[3]) + "\n";
+                    }
+                } 
+            }
+        }
     }  
-
 
     class Program
     {
@@ -41,28 +64,25 @@ namespace Task_apiIO
         {
             Countries USA = new Countries();
             USA.Country_name = "United+States";
+
             Countries TR = new Countries();
             TR.Country_name = "Turkey";
 
-            Console.Write("Please enter country name: ");
-            string s = Console.ReadLine();
+            Console.Write("Please enter country name( USA or Turkey )  : ");
+            string s = (Console.ReadLine()).ToLower();
 
             switch (s)
             {
                 case "usa": 
-                    USA.GetList();
-                    Console.WriteLine(USA.Response);
-                    //var response = .Response;
+                    USA.short_list_of_universities();
+                    Console.WriteLine(USA.short_list);
                     break;
-                case "Turkey": 
-                    TR.GetList();
-                    Console.WriteLine(TR.Response);
-                    break;
-                case "":
-                    Console.WriteLine();
+                case "turkey":
+                    TR.short_list_of_universities();
+                    Console.WriteLine(TR.short_list);
                     break;
                     default: 
-                    Console.WriteLine();
+                    Console.WriteLine("Unfortunately, we have not found such a country! Try again)");
                     break;
             }
         }
