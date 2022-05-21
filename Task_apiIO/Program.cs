@@ -19,11 +19,11 @@ namespace Task_apiIO
         public string country_name;
         
         //Метод создания запоса и получения ответа по нему
-        private void GetJson()
+        private void GetJson(string Country_name)
         {
             //Создаёт итоговую ссылку для запроса
             link = link + country_name;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link + Country_name);
             //Попытка вытянуть данные по запросу
             try
             {
