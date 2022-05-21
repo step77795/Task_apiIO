@@ -81,11 +81,8 @@ namespace Task_apiIO
     {
         private static void Main(string[] args)
         {
-            Countries USA = new Countries();
-            USA.Country_name = "United+States";
-
-            Countries TR = new Countries();
-            TR.Country_name = "Turkey";
+            Countries USA = new Countries { Country_name = "United+States"};
+            Countries TR = new Countries { Country_name = "Turkey" };
 
             Console.Write("Please enter country name( USA or Turkey )  : ");
             string s = (Console.ReadLine()).ToLower();
