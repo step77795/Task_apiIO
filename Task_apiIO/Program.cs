@@ -66,19 +66,22 @@ namespace Task_apiIO
             Countries TR = new Countries { country_name = "Turkey" };
 
             Console.Write("Please enter country name( USA or Turkey )  : ");
-            string str = (Console.ReadLine()).ToLower();
-
-            switch (str)
+            string str =  Console.ReadLine();
+            if (str != null) 
             {
-                case "usa": 
-                    USA.Short_list_of_universities();
-                    break;
-                case "turkey":
-                    TR.Short_list_of_universities();
-                    break;
-                    default: 
-                    Console.WriteLine("Unfortunately, we have not found such a country! Try again)");
-                    break;
+                str = str.ToLower();
+                switch (str)
+                {
+                    case "usa":
+                        USA.Short_list_of_universities();
+                        break;
+                    case "turkey":
+                        TR.Short_list_of_universities();
+                        break;
+                    default:
+                        Console.WriteLine("Unfortunately, we have not found such a country! Try again)");
+                        break;
+                }
             }
         }
     }
