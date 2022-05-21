@@ -22,8 +22,8 @@ namespace Task_apiIO
         protected void GetJson()
         {   
             Create_link();
-            HttpWebRequest request;            
-            request = (HttpWebRequest)WebRequest.Create(link);
+            //fix12-> HttpWebRequest request;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link);
             //Попытка вытянуть данные по запросу
             try
             {
@@ -53,6 +53,9 @@ namespace Task_apiIO
             *храниться (много всяких полей в том числе и name(ИСКОМОЕ) см.выше
             */
             var json = JArray.Parse(Response);
+            
+
+
 
             //Грубо разбиваю блоками. в Str будет храниться массив полей, в том числе и name(ИСКОМОЕ)
             for (int i =0; i < json.Count; i++)
