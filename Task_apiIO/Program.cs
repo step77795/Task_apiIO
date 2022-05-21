@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Task_apiIO
 {   //Родительский класс(ограничевается раздачей общей кастомной ссылки)
@@ -39,40 +41,23 @@ namespace Task_apiIO
         public void short_list_of_universities()
         {
             GetJson();
+
             /*Json файл приходит в формате 
-             * Json
-             *      0
-             *          много всяких полей 
-             *          в том числе и name <-нужно
-             *      1  
-             *          ...
-             *     ...
-             */
-
-            /*Разбиваю блоками. в json будет храниться "массив" в каждом аргументе, которого
-            *храниться (много всяких полей в том числе и name(ИСКОМОЕ) см.выше
+            * Json
+            *      0
+            *          много всяких полей 
+            *          в том числе и name <-нужно
+            *      1  
+            *          ...
+            *     ...
             */
-            var json = JArray.Parse(Response);
-            
-
-
-
-            //Грубо разбиваю блоками. в Str будет храниться массив полей, в том числе и name(ИСКОМОЕ)
-            for (int i =0; i < json.Count; i++)
-            { 
-                char[] a = { '\n' };
-                string str = Convert.ToString(json[i]);
-                string[] Str = str.Split(a, StringSplitOptions.RemoveEmptyEntries);
-                //Нахожу поле name и убираю шелуху 
-                for (int j=0; j<Str.Length; j++)
-                {
-                    if (Str[j].Contains("  \"name\": "))
-                    {
-                        char[] b = { '"' };
-                        string[] Str1 = Str[j].Split(b, StringSplitOptions.RemoveEmptyEntries);
-                        short_list = short_list + Convert.ToString(Str1[3]) + "\n";
-                    }
-                } 
+            //Обработка json
+            var jarray = JArray.Parse(Response);
+            for (int i=0; i< jarray.Count; i++)
+            {
+                var jarray_i = JObject.Parse(Convert.ToString(jarray[i]));
+                var name = jarray_i["name"];
+                Console.WriteLine(name);
             }
         }
     }  
