@@ -4,23 +4,18 @@ using System.Net;
 
 namespace Task_apiIO
 {
-    
-    //Родительский класс(ограничевается раздачей общей кастомной ссылки)
-    public class World_list_of_uni
+    public class Countries
     {
-        public string link= "http://universities.hipolabs.com/search?country=";
-    }
-    //Наследник
-    public class Countries: World_list_of_uni
-    {
+        private const string link = "http://universities.hipolabs.com/search?country=";
         //Автоматическое свойство. Служит "хабом" для результата выполнения парсинга.
-        public string Response { get; set; }
+        private string Response { get; set; }
         //Задаёт необходимое название страны для запроса
         public string country_name;
         
         //Метод создания запоса и получения ответа по нему
         private void GetJson()
         {
+
             //Создаёт итоговую ссылку для запроса
             //link = link + country_name;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(link + country_name);
